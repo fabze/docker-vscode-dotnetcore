@@ -32,32 +32,47 @@ ENV MYUSERNAME=${MYUSERNAME} \
 
 
 RUN apt-get update -qq && \
-    echo 'Installing OS dependencies' && \
-    apt-get install -qq -y --fix-missing \ 
-      sudo software-properties-common libxext-dev libxrender-dev libxslt1.1 \
-      libgconf-2-4 libnotify4 libnspr4 libnss3 libnss3-nssdb \
-      libxtst-dev libgtk2.0-0 libcanberra-gtk-module \
-      libxss1 \
-      libxkbfile1 \
-      git curl tree locate net-tools telnet \
-      emacs ruby make bash-completion \
-      bash-completion python python-pip meld \
-      nodejs-legacy npm \
-      libxkbfile1 \
-      libxss1 \
-      locales netcat \
-    && \
-    npm install -g npm && \
-    pip install --upgrade pip && \
-    pip install mkdocs && \
-    echo 'Cleaning up' && \
-    apt-get clean -qq -y && \
-    apt-get autoclean -qq -y && \
-    apt-get autoremove -qq -y &&  \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /tmp/* && \
-    updatedb && \
-    locale-gen en_US.UTF-8
+	echo 'Installing OS dependencies' && \
+	apt-get install -qq -y --fix-missing \ 
+	sudo software-properties-common \
+	libxext-dev \
+	libxrender-dev \
+	libxslt1.1 \
+	libgconf-2-4 \
+	libnotify4 \
+	libnspr4 \
+	libnss3 \
+	libnss3-nssdb \
+	libxtst-dev \
+	libgtk2.0-0 \
+	libcanberra-gtk-module \
+	libxss1 \
+	libxkbfile1 \
+	libunwind8 \
+	liblttng-ust0 \
+	libcurl3 \
+	libssl1.0.0 \
+	libuuid1 \
+	libkrb5-3 \
+	zlib1g \
+	libicu55 \
+	git curl tree locate net-tools telnet \
+	emacs ruby make bash-completion \
+	bash-completion python python-pip meld \
+	nodejs npm \
+	locales netcat \
+	&& \
+	npm install -g npm && \
+	pip install --upgrade pip && \
+	pip install mkdocs && \
+	echo 'Cleaning up' && \
+	apt-get clean -qq -y && \
+	apt-get autoclean -qq -y && \
+	apt-get autoremove -qq -y &&  \
+	rm -rf /var/lib/apt/lists/* && \
+	rm -rf /tmp/* && \
+	updatedb && \
+	locale-gen en_US.UTF-8
 
 #RUN useradd --no-create-home -g users syncthing
 
