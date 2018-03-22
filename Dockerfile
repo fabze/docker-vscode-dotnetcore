@@ -8,6 +8,10 @@ ENV LANG=C.UTF-8 \
     VSCODE=https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable \
     TINI_VERSION=v0.16.1
 
+ENV DOTNET_SDK_VERSION 2.1.101
+ENV DOTNET_SDK_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz
+ENV DOTNET_SDK_DOWNLOAD_SHA d231ac3562f025b848497eddbcb254cfd547bd622b35dc4b1ed5bcd29153f832610b77cf7edf15d9f05c707d4d06abecbdcd7633fa721246d6d7ba61d78eea81
+
 #https://az764295.vo.msecnd.net/stable/5be4091987a98e3870d89d630eb87be6d9bafd27/code_1.5.3-1474533365_amd64.deb
 #VSCode 1.5.3
 
@@ -90,7 +94,13 @@ RUN echo 'Creating user: ${MYUSERNAME} wit UID $UID' && \
     dpkg -i vscode.deb && rm -f vscode.deb && \
     echo "Install OK"
 
-
+# Install .NET Core SDK
+RUN curl -SL $DOTNET_SDK_DOWNLOAD_URL --output dotnet.tar.gz \
+    && echo "$DOTNET_SDK_DOWNLOAD_SHA dotnet.tar.gz" | sha512sum -c - \
+    && mkdir -p /usr/share/dotnet \
+    && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
+    && rm dotnet.tar.gz \
+    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
 
 #USER ${MYUSERNAME}
 ENV HOME /home/${MYUSERNAME}
